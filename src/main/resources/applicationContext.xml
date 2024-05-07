@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/aop  http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+<!--    目标对象-->
+    <bean id="target" class="com.dly.aop.Target"/>
+<!--    切面对象-->
+    <bean id="myAspect" class="com.dly.aop.MyAspect"/>
+
+<!--    配置织入,告诉spring，哪些方法需要哪些增强-->
+    <aop:config>
+<!--        声明切面-->
+        <aop:aspect ref="myAspect">
+            <aop:pointcut id="myPointcut" expression="execution(* com.dly.aop.Target.*())"/>
+<!--            <aop:before method="before" pointcut="execution(public void com.dly.aop.Target.save())"/>-->
+<!--            <aop:before method="before" pointcut="execution(* com.dly.aop.Target.*())"/>-->
+<!--            <aop:after-returning method="afterReturning" pointcut="execution(* com.dly.aop.Target.*())"/>-->
+<!--            <aop:around method="around" pointcut="execution(* com.dly.aop.Target.*())"/>-->
+<!--            <aop:after-throwing method="afterThrowing" pointcut="execution(* com.dly.aop.Target.*())"/>-->
+<!--            <aop:after method="after" pointcut="execution(* com.dly.aop.Target.*())"/>-->
+            <aop:around method="around" pointcut-ref="myPointcut"/>
+            <aop:after method="after" pointcut-ref="myPointcut"/>
+        </aop:aspect>
+    </aop:config>
+</beans>
